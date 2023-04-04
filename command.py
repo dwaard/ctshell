@@ -24,17 +24,24 @@ class Command:
         return method(context)
 
     def test(self, e):
-        for index, row in e.classroom.iterrows():
-            print(row['github_username'])
+        for repo in e.repoFolders():
+            print(e.get_commit_count(repo))
     
     def repos(self, e):
         print(", ".join(e.repoFolders()))
+
+    def reset(self, e):
+        print(Color.fg.green + "Reset the template project")
+        e.reset_template_project()
 
     def clone(self, e):
         existing = e.repoFolders()
         for index, row in e.classroom.iterrows():
             if row['github_username'] not in existing:
+                print(Color.fg.green + "Cloning: " + row['github_username'] + Color.reset)
                 e.clone(row)
+            else:
+                print(Color.fg.darkgrey + "Skipping: " + row['github_username'] + Color.reset)
 
     def exit(self, e):
         print("Closing....")
