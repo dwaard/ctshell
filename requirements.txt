@@ -1,0 +1,5 @@
+# List all your required packages here
+pandas
+
+# Required from the template:
+envparse
